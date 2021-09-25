@@ -46,7 +46,36 @@ class Kimchi {
     }
 }
 
-let tuHakusai = prompt("Ingrese cantidad de Hakusai en gramos")
-const tuKimchi = new Kimchi(tuHakusai)
-let tusIngredientes = tuKimchi.calcularIngredientes()
-console.log(tusIngredientes.join("\n"))
+
+
+//default para que submit no me reloaded la pag
+let miFormulario = document.getElementById("formulario");
+miFormulario.addEventListener("submit", calcularTuReceta);
+miFormulario.addEventListener("reset", vaciarFormulario);
+
+// refiero a mi html div resultadoCalc
+let resultadoCalc = document.getElementById("resultadoCalc")
+
+function calcularTuReceta(e) {
+    e.preventDefault();
+    resultadoCalc.innerHTML = ""
+    let tuHakusai = document.getElementById("ingreseHakusai").value
+    const tuKimchi = new Kimchi(tuHakusai)
+    let tusIngredientes = tuKimchi.calcularIngredientes()
+    console.log(tusIngredientes.join("\n"))
+    tusIngredientes.forEach((item, index) => {
+        const elemento = document.createElement("li")
+        elemento.innerHTML = `<p> ${ item } </p>`
+        resultadoCalc.appendChild(elemento)
+    })
+}
+
+// activa btn reset
+function vaciarFormulario(e) {
+    resultadoCalc.innerHTML = ""
+}
+
+
+//listado en orden en el html MAP: otra opcion
+//const lista = tusIngredientes.map(item => `<li> ${item}</li> `)
+//document.getElementById("resultadoCalc").innerHTML = `<ul>  ${lista} </ul>`
