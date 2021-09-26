@@ -50,17 +50,29 @@ class Kimchi {
 
 //default para que submit no me reloaded la pag
 let miFormulario = document.getElementById("formulario");
-miFormulario.addEventListener("submit", calcularTuReceta);
+miFormulario.addEventListener("submit", validarFormulario);
 miFormulario.addEventListener("reset", vaciarFormulario);
 
 // refiero a mi html div resultadoCalc
 let resultadoCalc = document.getElementById("resultadoCalc")
 
-function calcularTuReceta(e) {
+function validarFormulario(e) {
     e.preventDefault();
+    let inputUsuario = document.getElementById("ingreseHakusai").value
+    console.log(typeof parseInt(inputUsuario))
+    if (parseInt(inputUsuario)) {
+        calcularTuReceta(inputUsuario)
+        console.log('entra', typeof inputUsuario)
+    } else {
+        resultadoCalc.innerHTML = `<h6>ERROR:INGRESE UN NUMERO</h6>`
+    }
+}
+
+function calcularTuReceta(input) {
+    console.log('calcula receta')
     resultadoCalc.innerHTML = ""
-    let tuHakusai = document.getElementById("ingreseHakusai").value
-    const tuKimchi = new Kimchi(tuHakusai)
+        //let tuHakusai = document.getElementById("ingreseHakusai").value
+    const tuKimchi = new Kimchi(input)
     let tusIngredientes = tuKimchi.calcularIngredientes()
     console.log(tusIngredientes.join("\n"))
     tusIngredientes.forEach((item, index) => {
