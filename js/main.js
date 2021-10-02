@@ -18,29 +18,29 @@ class Kimchi {
     calcularIngredientes(a, b) {
         const ingredientes = [];
         let nuevaSalKosher = ((this.UsuarioHakusai * this.salKosher) / this.hakusai);
-        ingredientes.push("Necesitas de Sal kosher: " + Math.round(nuevaSalKosher) + " gramos")
+        ingredientes.push({ id: 1, ingrediente: "Sal kosher ", cantidad: Math.round(nuevaSalKosher) })
         let nuevaAguaPasta = ((this.UsuarioHakusai * this.aguaPasta) / this.hakusai);
-        ingredientes.push("Necesitas de Agua para la pasta: " + Math.round(nuevaAguaPasta) + " gramos")
+        ingredientes.push({ id: 2, ingrediente: "Agua para la pasta", cantidad: Math.round(nuevaAguaPasta) })
         let NuevaHarinaArroz = ((this.UsuarioHakusai * this.harinaArroz) / this.hakusai);
-        ingredientes.push("Necesitas de Harina de arroz: " + Math.round(NuevaHarinaArroz) + " gramos")
+        ingredientes.push({ id: 3, ingrediente: "Harina de arroz ", cantidad: Math.round(NuevaHarinaArroz) })
         let NuevaAzucarPasta = ((this.UsuarioHakusai * this.azucarPasta) / this.hakusai);
-        ingredientes.push("Necesitas de Azucar para la pasta: " + Math.round(NuevaAzucarPasta) + " gramos")
+        ingredientes.push({ id: 4, ingrediente: "Azucar para la pasta", cantidad: Math.round(NuevaAzucarPasta) })
         let nuevaZanahoria = ((this.UsuarioHakusai * this.zanahoria) / this.hakusai);
-        ingredientes.push("Necesitas de Zanahoria: " + Math.round(nuevaZanahoria) + " gramos")
+        ingredientes.push({ id: 5, ingrediente: "Zanahoria", cantidad: Math.round(nuevaZanahoria) })
         let nuevoNabo = ((this.UsuarioHakusai * this.nabo) / this.hakusai);
-        ingredientes.push("Necesitas de Nabo: " + Math.round(nuevoNabo) + " gramos")
+        ingredientes.push({ id: 6, ingrediente: "Nabo", cantidad: Math.round(nuevoNabo) })
         let nuevaCebollaVerdeo = ((this.UsuarioHakusai * this.cebollaVerdeo) / this.hakusai);
-        ingredientes.push("Necesitas de cebolla de verdeo: " + Math.round(nuevaCebollaVerdeo) + " gramos")
+        ingredientes.push({ id: 7, ingrediente: "cebolla de verdeo", cantidad: Math.round(nuevaCebollaVerdeo) })
         let nuevoAjo = ((this.UsuarioHakusai * this.ajo) / this.hakusai);
-        ingredientes.push("Necesitas de Ajo : " + Math.round(nuevoAjo) + " gramos")
+        ingredientes.push({ id: 8, ingrediente: "Ajo", cantidad: Math.round(nuevoAjo) })
         let nuevoJengibre = ((this.UsuarioHakusai * this.jengibre) / this.hakusai);
-        ingredientes.push("Necesitas de jengibre: " + Math.round(nuevoJengibre) + " gramos")
+        ingredientes.push({ id: 9, ingrediente: "jengibre", cantidad: Math.round(nuevoJengibre) })
         let NuevaCebolla = ((this.UsuarioHakusai * this.cebolla) / this.hakusai);
-        ingredientes.push("Necesitas de Cebolla: " + Math.round(NuevaCebolla) + " gramos")
+        ingredientes.push({ id: 10, ingrediente: "Cebolla", cantidad: Math.round(NuevaCebolla) })
         let nuevaSalsaPescado = ((this.UsuarioHakusai * this.salsaPescado) / this.hakusai);
-        ingredientes.push("Necesitas de salsa de pescado: " + Math.round(nuevaSalsaPescado) + " mililitros")
+        ingredientes.push({ id: 11, ingrediente: "salsa de pescado", cantidad: Math.round(nuevaSalsaPescado) })
         let nuevoGochuGaru = ((this.UsuarioHakusai * this.gochuGaru) / this.hakusai);
-        ingredientes.push("Necesitas de Gochugaru: " + Math.round(nuevoGochuGaru) + " gramos")
+        ingredientes.push({ id: 12, ingrediente: "Gochugaru", cantidad: Math.round(nuevoGochuGaru) })
 
         return ingredientes
     }
@@ -74,10 +74,17 @@ function calcularTuReceta(input) {
         //let tuHakusai = document.getElementById("ingreseHakusai").value
     const tuKimchi = new Kimchi(input)
     let tusIngredientes = tuKimchi.calcularIngredientes()
-    console.log(tusIngredientes.join("\n"))
+    console.log(tusIngredientes)
     tusIngredientes.forEach((item, index) => {
+        localStorage.setItem(item.ingrediente, JSON.stringify(item))
+        console.log(localStorage.getItem(item.ingrediente))
+
+
+
+
         const elemento = document.createElement("li")
-        elemento.innerHTML = `<p> ${ item } </p>`
+            //  '<p> Necesitas de ' + item.ingrediente + ': ' + item.cantidad + 'gramos </p>'
+        elemento.innerHTML = `<p> Necesitas de  ${ item.ingrediente } : ${item.cantidad} gramos </p>`
         resultadoCalc.appendChild(elemento)
     })
 }
@@ -86,6 +93,7 @@ function calcularTuReceta(input) {
 function vaciarFormulario(e) {
     resultadoCalc.innerHTML = ""
 }
+
 
 
 //listado en orden en el html MAP: otra opcion
