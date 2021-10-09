@@ -49,12 +49,21 @@ class Kimchi {
 
 
 //default para que submit no me reloaded la pag
-let miFormulario = document.getElementById("formulario");
-miFormulario.addEventListener("submit", validarFormulario);
-miFormulario.addEventListener("reset", vaciarFormulario);
+//let miFormulario = document.getElementById("formulario");
+$("#formulario").submit(validarFormulario)
+
+// activa btn reset
+$("#formulario").on("reset", function(vaciarFormulario) {
+    $("#resultadoCalc").empty();
+    //resultadoCalc.innerHTML = ""
+})
+
+//JS VANILLA
+//miFormulario.addEventListener("submit", validarFormulario);
+//miFormulario.addEventListener("reset", vaciarFormulario);
 
 // refiero a mi html div resultadoCalc
-let resultadoCalc = document.getElementById("resultadoCalc")
+//let resultadoCalc = document.getElementById("resultadoCalc")
 
 function validarFormulario(e) {
     e.preventDefault();
@@ -64,9 +73,17 @@ function validarFormulario(e) {
         calcularTuReceta(inputUsuario)
         console.log('entra', typeof inputUsuario)
     } else {
-        resultadoCalc.innerHTML = `<h6>ERROR:INGRESE UN NUMERO</h6>`
+        $("#resultadoCalc").append("<h6 class='reset'>ERROR:INGRESE UN NUMERO</h6>")
+        $(".reset").css({
+                "color": "red",
+                "background-color": "yellow",
+
+            })
+            .slideUp(2000)
+            .slideDown(2000);
     }
 }
+//resultadoCalc.innerHTML = `<h6>ERROR:INGRESE UN NUMERO</h6>`
 
 function calcularTuReceta(input) {
     console.log('calcula receta')
@@ -80,19 +97,17 @@ function calcularTuReceta(input) {
         console.log(localStorage.getItem(item.ingrediente))
 
 
+        //Jquery
+        $("#resultadoCalc").prepend(`<li><p>Necesitas de  ${ item.ingrediente } : ${item.cantidad} gramos </p>`)
 
-
-        const elemento = document.createElement("li")
-            //  '<p> Necesitas de ' + item.ingrediente + ': ' + item.cantidad + 'gramos </p>'
-        elemento.innerHTML = `<p> Necesitas de  ${ item.ingrediente } : ${item.cantidad} gramos </p>`
-        resultadoCalc.appendChild(elemento)
+        //JS Vanilla 
+        //const elemento = document.createElement("li")
+        //  '<p> Necesitas de ' + item.ingrediente + ': ' + item.cantidad + 'gramos </p>'
+        //elemento.innerHTML = `<p> Necesitas de  ${ item.ingrediente } : ${item.cantidad} gramos </p>`
+        //resultadoCalc.appendChild(elemento)
     })
 }
 
-// activa btn reset
-function vaciarFormulario(e) {
-    resultadoCalc.innerHTML = ""
-}
 
 
 
