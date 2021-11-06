@@ -180,28 +180,33 @@ $("#footer-animacion").append(
 //Declaramos la url del archivo JSON local
 const URLJSON = "JSON/datos.json";
 //Agregamos un botón con jQuery
-$("#top10").append(
+$("#top10btn").append(
     '<button id="btn1" class="btn btn-primary"> Mi Top 10 K-Food en BsAs</button>'
 );
 //Escuchamos el evento click del botón agregado
 $("#btn1").click(() => {
-    $.getJSON(URLJSON, function(respuesta, estado) {
-        console.log("asd");
-        if (estado === "success") {
-            let misDatos = respuesta.restaurantes;
-            for (const dato of misDatos) {
-                console.log(dato.Nombre);
-                $("#top10").prepend(`<div>
+
+    if (!$("#top10").text()) {
+        $.getJSON(URLJSON, function(respuesta, estado) {
+            if (estado === "success") {
+                let misDatos = respuesta.restaurantes;
+                for (const dato of misDatos) {
+                    console.log(dato.Nombre);
+                    $("#top10").prepend(`<div>
                                 <ul>
                                 <li class="italic">${dato.nombre}</li>
                                 <p> ${dato.direccion}</p>
                                 </ul>
                             </div>`);
+                }
+                $(".italic").css({
+                    "font-weight": "bolder",
+                    "font-style": "italic"
+                })
             }
-            $(".italic").css({
-                "font-weight": "bolder",
-                "font-style": "italic"
-            })
-        }
-    });
+        });
+    } else {
+        $("#top10").empty();
+
+    }
 });
